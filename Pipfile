@@ -6,11 +6,16 @@ name = "pypi"
 [packages]
 numpy = "*"
 djangorestframework = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 pylint = "*"
 flake8 = "*"
 pre-commit = "*"
+black = "*"
 
 [requires]
 python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true
