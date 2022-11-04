@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 pylint = "*"
