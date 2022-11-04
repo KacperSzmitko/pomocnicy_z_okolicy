@@ -8,7 +8,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\pzo\\manage.py",
+            "program": "${workspaceFolder}\\pzo_backend\\manage.py",
             "args": [
                 "runserver"
             ],
