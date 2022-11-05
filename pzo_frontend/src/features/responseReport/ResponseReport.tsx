@@ -35,7 +35,7 @@ function ResponseReport({report}: PropType) {
 
     return (<div className="response-report">
                 <div className="report-type">
-                    {report.report_type.type_name}
+                    {report.report_type}
                 </div>
                 <div className="map">
                     <Map lat={report.latitude} lng={report.altitude}/>
@@ -62,7 +62,7 @@ function ResponseReport({report}: PropType) {
                 <div className="response-react">
                     {reportAcceptanceState === "NONE"} ?
                         <div>
-                            {report.report_type.type_name === "HELP"} ?
+                            {report.report_type === "HELP"} ?
                             {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} :
                             {<button className="ok-button">OK</button>}
                         </div> :

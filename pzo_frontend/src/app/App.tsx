@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "../common/HomePage";
 import LoginPage from "../features/auth/LoginPage";
 import CreateReport from '../features/reports/CreateReport';
-import Map from '../features/map/Map';
+import Notifications from '../features/responseReport/Notifications';
 
 function App() {
   return (
