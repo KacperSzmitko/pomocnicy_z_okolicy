@@ -11,11 +11,11 @@ from app.models import (
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import UpdateAPIView, ListAPIView
+from rest_framework.generics import UpdateAPIView, ListAPIView, DestroyAPIView
 from rest_framework.serializers import ModelSerializer
 from django.db.models import Q
-
 import math
+from django.db.models.query import QuerySet
 
 
 class UserData(APIView):
@@ -213,7 +213,18 @@ class ReportView(APIView):
         return Response(data=reports.data)
 
     def post(self, request: Request) -> Response:
-        report = self.ReportSerializer(data=request.data)
+        report = self.ReportSerializer(data=request.data)  # type: ignore
         report.is_valid(raise_exception=True)
         report.save()
         return Response(data=report.data)
+
+class DeleteReport(APIView):
+    def get_queryset(self) -> QuerySet:
+        return Reports.objects.filter(user=self.request.user)
+
+    def delete(self, request:Request, pk: int) -> Response:
+        try:
+            self.get_queryset().get(pk=pk).delete()
+        except Exception as e:
+            return Response(status=404)
+        return Response(status=204)

@@ -7,6 +7,7 @@ from app.views import (
     ResetTestData,
     ReportView,
 )
+from app.views import DeleteReport
 
 app_name = "app"
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path("report/states/", GetReportStates.as_view()),
     path("report/types/", GetReportTypes.as_view()),
     path("reports/", ReportView.as_view(), name="reports"),
+    path("reports/<int:pk>/", DeleteReport.as_view()),
 ]
