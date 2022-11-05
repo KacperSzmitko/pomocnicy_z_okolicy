@@ -158,10 +158,8 @@ class GetReportTypes(ListAPIView):
     queryset = ReportTypes.objects.all()
 
     def get(self, request, *args, **kwargs):
-        instance: ReportTypes = ReportTypes.objects.get(
-            type_name=request.data.get("type_name")
-        )
-        return self.OutputSerializer(instance, many=True).data
+        instance: ReportTypes = ReportTypes.objects.all()
+        return Response(data=self.OutputSerializer(instance, many=True).data)
 
 
 class GetReportStates(ListAPIView):
@@ -173,10 +171,8 @@ class GetReportStates(ListAPIView):
     queryset = ReportStates.objects.all()
 
     def get(self, request, *args, **kwargs):
-        instance: ReportStates = ReportStates.objects.get(
-            type_name=request.data.get("type_name")
-        )
-        return self.OutputSerializer(instance, many=True).data
+        instances: ReportStates = ReportStates.objects.all()
+        return Response(data=self.OutputSerializer(instances, many=True).data)
 
 
 class ReportView(APIView):

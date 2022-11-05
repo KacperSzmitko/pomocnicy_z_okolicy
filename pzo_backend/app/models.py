@@ -9,6 +9,8 @@ class UsersData(models.Model):
     age = models.IntegerField(validators=[validators.MinValueValidator(0)])
     city = models.CharField(max_length=255)
     points = models.IntegerField(default=0)
+    firstname = models.CharField(max_length=255, default="")
+    surname = models.CharField(max_length=255, default="")
 
 
 class ReportTypes(models.Model):
@@ -27,15 +29,18 @@ class Reports(models.Model):
     latitude = models.FloatField()
     altitude = models.FloatField()
     time = models.DateTimeField(auto_now_add=True)
-    max_people = models.IntegerField(validators=[
-        validators.MinValueValidator(1),
-        validators.MaxValueValidator(999)
-        ], null=True, default=None)
-    current_people = models.IntegerField(validators=[
-        validators.MinValueValidator(0),
-        validators.MaxValueValidator(999)
-        ], null=True, default=None)
+    max_people = models.IntegerField(
+        validators=[validators.MinValueValidator(1), validators.MaxValueValidator(999)],
+        null=True,
+        default=None,
+    )
+    current_people = models.IntegerField(
+        validators=[validators.MinValueValidator(0), validators.MaxValueValidator(999)],
+        null=True,
+        default=None,
+    )
     description = models.CharField(max_length=255, null=True, default=None)
+
 
 class ReportTypesToAccept(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
