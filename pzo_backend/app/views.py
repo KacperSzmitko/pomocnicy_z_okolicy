@@ -24,7 +24,7 @@ class UserData(APIView):
 
         class Meta:
             model = UsersData
-            fields = ("email", "firstname", "surname", "age", "city", "search_area", "points")
+            fields = ("id", "email", "firstname", "surname", "age", "city", "search_area", "points")
 
         def get_email(self, obj):
             return obj.user.email
