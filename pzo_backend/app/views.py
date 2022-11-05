@@ -178,6 +178,16 @@ class GetReportStates(ListAPIView):
         return Response(data=self.OutputSerializer(instances, many=True).data)
 
 
+class AcceptReport(APIView):
+    def get(self, request: Request, pk: int) -> Response:
+        obj = Reports.objects.get(pk=pk)
+        if obj.current_people:
+            obj.current_people += 1
+            obj.save()
+
+        return Response(status=201)
+
+
 class ReportView(APIView):
     class ReportSerializer(serializers.ModelSerializer):
         class Meta:
