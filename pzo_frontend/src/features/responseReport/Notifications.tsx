@@ -19,6 +19,10 @@ function Notifications() {
     setInterval(() => dispach(getReports(lat, lng)), 7000);
   }, []);
 
+  useEffect(() => {
+    dispach(getReports(lat, lng));
+  }, []);
+
   return (
     <div>
       {reports.map((report) => (
