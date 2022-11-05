@@ -6,6 +6,7 @@ import {
   reportsFetched,
   reportAccepted,
   reportTypesFetched,
+  reportStatesFetched
 } from "./reportsSlice";
 import { Dispatch } from "redux";
 
@@ -42,6 +43,15 @@ export const getReportTypes = () => (dispach: Dispatch) => {
     .get(BASE_API_URL + "app/report/types/")
     .then((response) => {
       dispach(reportTypesFetched(response.data));
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getReportStates = () => (dispach: Dispatch) => {
+  axios
+    .get(BASE_API_URL + "app/report/states/")
+    .then((response) => {
+      dispach(reportStatesFetched(response.data));
     })
     .catch((err) => console.log(err));
 };
