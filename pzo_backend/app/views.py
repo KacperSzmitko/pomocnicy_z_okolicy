@@ -25,6 +25,7 @@ class UserData(APIView):
         class Meta:
             model = UsersData
             fields = (
+                "id",
                 "email",
                 "firstname",
                 "surname",
