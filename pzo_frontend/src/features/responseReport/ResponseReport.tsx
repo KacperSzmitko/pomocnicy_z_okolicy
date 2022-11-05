@@ -60,11 +60,15 @@ function ResponseReport({report}: PropType) {
                     </div>
                 </div>
                 <div className="response-react">
-                    <div>
-                        {report.report_type.type_name === "HELP"} ? 
-                        {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} : 
-                        {<button className="ok-button">OK</button>}
-                    </div>
+                    {reportAcceptanceState === "NONE"} ? 
+                        <div>
+                            {report.report_type.type_name === "HELP"} ? 
+                            {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} : 
+                            {<button className="ok-button">OK</button>}
+                        </div> :
+                            <div>
+                                RESPONSE SENT
+                            </div>
                 </div>
             </div>)
 }
