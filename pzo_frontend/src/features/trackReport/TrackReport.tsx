@@ -2,24 +2,25 @@ import React from 'react'
 import Map from '../map/Map';
 import ReportType from '../reportType/reportType'
 import {Report} from '../reports/reportsSlice'
-import reportTrackDecission from '../reportTrackDecission/reportTrackDecission'
-import reportInfo from '../reportInfo/reportInfo'
+import ReportTrackDecission from '../reportTrackDecission/reportTrackDecission'
+import ReportInfo from '../reportInfo/reportInfo'
+
 
 function TrackReport(report:Report) {
     return <div className="response-report">
                 <div className="report-type">
-                    <ReportType type={report.report_type.type_name} />
+                    <ReportType reportType={report.report_type.type_name} />
                 </div>
                 <div className="map">
                     <Map />
                 </div>
                 <div className="report-info">
-                    <reportInfo report={report}/>
+                    <ReportInfo report={report}/>
                 </div>
                 <div className="response-react">
-                    <reportTrackDecission />
+                    <ReportTrackDecission />
                 </div>
             </div>;
 }
 
-export default React.memo(ResponseReport);
+export default React.memo(TrackReport);

@@ -1,8 +1,8 @@
 import React from 'react'
 import {Report} from '../reports/reportsSlice'
-import userInfoView from '../userInfo/userInfoView'
+import UserInfoView from '../userInfo/userInfoView'
 
-function reportInfo(report:Report) {
+function ReportInfo(report:Report) {
     return  <div>
                 <div className='report-info-description'>
                     {report.description}
@@ -17,7 +17,7 @@ function reportInfo(report:Report) {
                         </div>
                     </div>
                     <div className='report-info-bottom-right report-info-user'>
-                        <userInfo user = {???}/> //TODO get user form report
+                        <UserInfoView user = {???}/> //TODO get user form report
                     </div>
                     
                 </div>
@@ -26,4 +26,4 @@ function reportInfo(report:Report) {
             </div>;
 }
 
-export default React.memo(reportType);
+export default React.memo(ReportInfo);

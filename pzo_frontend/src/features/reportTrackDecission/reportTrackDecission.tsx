@@ -1,6 +1,6 @@
 import React from 'react'
 
-function reportTrackDecission(reportType:string) {
+function ReportTrackDecission(reportType:string) {
     //TODO logika do przycisku
 
     return  <div>
@@ -9,4 +9,4 @@ function reportTrackDecission(reportType:string) {
             </div>;
 }
 
-export default React.memo(reportTrackDecission);
+export default React.memo(ReportTrackDecission);
