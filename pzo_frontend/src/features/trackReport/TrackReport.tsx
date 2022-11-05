@@ -1,27 +1,25 @@
 import React from 'react'
 import Map from '../map/Map';
+import ReportType from '../reportType/reportType'
+import {Report} from '../reports/reportsSlice'
+import reportTrackDecission from '../reportTrackDecission/reportTrackDecission'
+import reportInfo from '../reportInfo/reportInfo'
 
-class ResponseReport extends React.Component {
-    render(report) {
-      return (
-        <div className="track-report">
-            <div className="report-type">
-              <ReportType type={report.type} />
-            </div>
-            <div className="map">
-              <Map />
-            </div>
-            <div className="report-info">
-              <ReportInfo report={report} />
-            </div>
-            <div className="response-accepted">
-              <ResponseReact report={report} />
-            </div>
-          
-        </div>
-        
-      );
-    }
-  }
-  
-  // Przykład użycia: <ShoppingList name="Marek" />
+function TrackReport(report:Report) {
+    return <div className="response-report">
+                <div className="report-type">
+                    <ReportType type={report.report_type.type_name} />
+                </div>
+                <div className="map">
+                    <Map />
+                </div>
+                <div className="report-info">
+                    <reportInfo report={report}/>
+                </div>
+                <div className="response-react">
+                    <reportTrackDecission />
+                </div>
+            </div>;
+}
+
+export default React.memo(ResponseReport);
