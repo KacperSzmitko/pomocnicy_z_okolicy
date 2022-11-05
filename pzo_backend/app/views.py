@@ -24,7 +24,7 @@ class UserData(APIView):
 
         class Meta:
             model = UsersData
-            fields = ("email", "firstname", "surname", "age", "city", "points")
+            fields = ("email", "firstname", "surname", "age", "city", "search_area", "points")
 
         def get_email(self, obj):
             return obj.user.email
@@ -141,7 +141,8 @@ class UserRate(UpdateAPIView):
                 "surname",
                 "age",
                 "city",
-                "points",
+                "search_area",
+                "points"
             )
 
     queryset = UsersData.objects.all()
