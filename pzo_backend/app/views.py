@@ -30,9 +30,8 @@ class UserData(APIView):
             return obj.user.email
 
     def get(self, request: Request) -> Response:
-        # TODO
-        # user_data = UsersData.objects.filter(user=request.user)
-        user_data = UsersData.objects.filter(user=User.objects.first())
+        user_data = UsersData.objects.filter(user=request.user)
+        # user_data = UsersData.objects.filter(user=User.objects.first())
         result = self.UserDataSerializer(user_data[0])
         return Response(data=result.data)
 
@@ -207,9 +206,9 @@ class ReportView(APIView):
             return Response(status=400)
 
         latitude, longitude = float(latitude), float(longitude)
-        # TODO
-        # area = float(UsersData.objects.get(user=request.user).search_area)
-        area = float(UsersData.objects.get(user=User.objects.first()).search_area)
+
+        area = float(UsersData.objects.get(user=request.user).search_area)
+        #area = float(UsersData.objects.get(user=User.objects.first()).search_area)
 
         earth_r = 6378.137
         pi = math.pi
@@ -221,9 +220,8 @@ class ReportView(APIView):
 
         obj = Reports.objects.filter(
             ~Q(report_state = "FINISHED"),
-            # TODO
-            #report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
-            report_type__in = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type"),
+            report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
+            #report_type__in = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type"),
             latitude__range = (latitude-latitude_distance, latitude+latitude_distance),
             altitude__range = (longitude-longitude_distance, longitude+longitude_distance)
         )
