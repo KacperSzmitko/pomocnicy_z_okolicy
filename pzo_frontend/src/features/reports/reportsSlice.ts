@@ -11,12 +11,12 @@ export interface Report {
   notified?: boolean;
   latitude: number;
   altitude: number;
-  report_type: ReportType;
-  report_state: string;
-  time: string;
-  max_people: number;
-  current_people: number;
-  description: string;
+  report_type: string;
+  report_state?: string;
+  time?: string;
+  max_people?: number;
+  current_people?: number;
+  description?: string;
 }
 
 export interface ReportsType {
@@ -24,6 +24,7 @@ export interface ReportsType {
   current_altitude: number;
   reports: Report[];
   avaliable_report_types: ReportType[];
+  avaliable_report_states: string[];
 }
 
 const initialState: ReportsType = {
@@ -31,6 +32,7 @@ const initialState: ReportsType = {
   current_altitude: 16.92,
   reports: [],
   avaliable_report_types: [],
+  avaliable_report_states: [],
 };
 
 const reportsSlice = createSlice({
@@ -61,6 +63,12 @@ const reportsSlice = createSlice({
     ) {
       state.avaliable_report_types = action.payload;
     },
+    reportStatesFetched(
+      state: ReportsType,
+      action: PayloadAction<string[]>
+    ) {
+      state.avaliable_report_states = action.payload;
+    },
     reportNotified(state: ReportsType, action: PayloadAction<number[]>) {
         state.reports.forEach((r) => {
             if (action.payload.includes(r.id!)) {
@@ -76,5 +84,6 @@ export const {
   reportsFetched,
   reportAccepted,
   reportTypesFetched,
+  reportStatesFetched
 } = reportsSlice.actions;
 export default reportsSlice.reducer;
