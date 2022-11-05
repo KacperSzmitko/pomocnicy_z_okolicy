@@ -4,9 +4,10 @@ import { getReports } from "../reports/actions";
 import ResponseReport from "./ResponseReport";
 
 function Notifications() {
+  const userId = useAppSelector((state) => state.reducer.userInfoSlice.id);
   const reports = useAppSelector((state) =>
     state.reducer.reportsSlice.reports.filter(
-      (report) => report.notified === false
+      (report) => report.notified === false && report.user !== userId
     )
   );
   const dispach = useAppDispatch();

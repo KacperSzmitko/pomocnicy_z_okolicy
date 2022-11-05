@@ -24,7 +24,15 @@ class UserData(APIView):
 
         class Meta:
             model = UsersData
-            fields = ("email", "firstname", "surname", "age", "city", "search_area", "points")
+            fields = (
+                "email",
+                "firstname",
+                "surname",
+                "age",
+                "city",
+                "search_area",
+                "points",
+            )
 
         def get_email(self, obj):
             return obj.user.email
@@ -66,7 +74,7 @@ class ResetTestData(APIView):
             age=3,
             city="Poznań",
             search_area=1000,
-            points=99999
+            points=99999,
         )
         UsersData.objects.create(
             user=u2,
@@ -75,7 +83,7 @@ class ResetTestData(APIView):
             age=87,
             city="Zielona góra",
             search_area=100,
-            points=-41
+            points=-41,
         )
         UsersData.objects.create(
             user=u3,
@@ -84,7 +92,7 @@ class ResetTestData(APIView):
             age=12,
             city="Bydgoszcz",
             search_area=300,
-            points=2
+            points=2,
         )
 
         ReportTypesToAccept.objects.create(user=u1, report_type=rt_i)
@@ -142,7 +150,7 @@ class UserRate(UpdateAPIView):
                 "age",
                 "city",
                 "search_area",
-                "points"
+                "points",
             )
 
     queryset = UsersData.objects.all()
@@ -201,7 +209,7 @@ class ReportView(APIView):
     def get(self, request: Request) -> Response:
         latitude, longitude = (
             request.query_params.get("latitude", None),
-            request.query_params.get("altitude", None)
+            request.query_params.get("altitude", None),
         )
         if not latitude or not longitude:
             return Response(status=400)
@@ -217,15 +225,25 @@ class ReportView(APIView):
         latitude_distance = m * area
         longitude_distance = (m * area) / math.cos(latitude * (pi / 180.0))
 
-        t = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type")
+        t = ReportTypesToAccept.objects.filter(user=User.objects.first()).values(
+            "report_type"
+        )
 
         obj = Reports.objects.filter(
-            ~Q(report_state = "FINISHED"),
+            ~Q(report_state="FINISHED"),
             # TODO
-            #report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
-            report_type__in = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type"),
-            latitude__range = (latitude-latitude_distance, latitude+latitude_distance),
-            altitude__range = (longitude-longitude_distance, longitude+longitude_distance)
+            # report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
+            report_type__in=ReportTypesToAccept.objects.filter(
+                user=User.objects.first()
+            ).values("report_type"),
+            latitude__range=(
+                latitude - latitude_distance,
+                latitude + latitude_distance,
+            ),
+            altitude__range=(
+                longitude - longitude_distance,
+                longitude + longitude_distance,
+            ),
         )
         reports = self.ReportSerializer(obj, many=True)
         return Response(data=reports.data)
@@ -234,17 +252,18 @@ class ReportView(APIView):
         serializer.save(author=self.request.user)
 
     def post(self, request: Request) -> Response:
-
+        request.data["user"] = request.user.id
         report = self.ReportSerializer(data=request.data)  # type: ignore
         report.is_valid(raise_exception=True)
         report.save()
         return Response(data=report.data)
 
+
 class DeleteReport(APIView):
     def get_queryset(self) -> QuerySet:
         return Reports.objects.filter(user=self.request.user)
 
-    def delete(self, request:Request, pk: int) -> Response:
+    def delete(self, request: Request, pk: int) -> Response:
         try:
             self.get_queryset().get(pk=pk).delete()
         except Exception as e:
