@@ -41,6 +41,7 @@ const reportsSlice = createSlice({
       state.reports.push(action.payload);
     },
     reportsFetched(state: ReportsType, action: PayloadAction<Report[]>) {
+      if (state.reports.length > 0) {
       const index = action.payload.findIndex(
         (r) => r.id === state.reports.at(-1)!.id
       );
@@ -50,6 +51,8 @@ const reportsSlice = createSlice({
           newReports.map((r) => ({ ...r, notified: false }))
         );
       }
+    }
+    else state.reports = action.payload.map((r) => ({ ...r, notified: false }));
     },
     reportAccepted(state: ReportsType, action: PayloadAction<number>) {},
     reportTypesFetched(

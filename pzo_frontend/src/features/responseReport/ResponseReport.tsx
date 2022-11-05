@@ -14,7 +14,7 @@ export interface PropType {
 function ResponseReport({report}: PropType) {
     const curr_lat =  useAppSelector((state) => state.reducer.reportsSlice.current_latitude)
     const curr_lon =  useAppSelector((state) => state.reducer.reportsSlice.current_altitude)
-    const curr_distance = React.useMemo(()=>(Math.pow(Math.pow(curr_lat-report.latitude, 2) + Math.pow(curr_lon-report.altitude, 2), 0.5)/360)*6356752, [curr_lat, curr_lon]) 
+    const curr_distance = React.useMemo(()=>(Math.pow(Math.pow(curr_lat-report.latitude, 2) + Math.pow(curr_lon-report.altitude, 2), 0.5)/360)*6356752, [curr_lat, curr_lon])
     const d = new Date();
     let reportTimeSec = d.getSeconds();
     const [curr_time, settime] = useState(d.getSeconds());
@@ -30,7 +30,7 @@ function ResponseReport({report}: PropType) {
 
     function reportAccepted(){
         reportAcceptanceState = "ACCEPTED"
-        dispach(acceptReport(report!.id))
+        if (report.id !== undefined) dispach(acceptReport(report.id))
     }
 
     return (<div className="response-report">
@@ -60,10 +60,10 @@ function ResponseReport({report}: PropType) {
                     </div>
                 </div>
                 <div className="response-react">
-                    {reportAcceptanceState === "NONE"} ? 
+                    {reportAcceptanceState === "NONE"} ?
                         <div>
-                            {report.report_type.type_name === "HELP"} ? 
-                            {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} : 
+                            {report.report_type.type_name === "HELP"} ?
+                            {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} :
                             {<button className="ok-button">OK</button>}
                         </div> :
                             <div>
