@@ -45,6 +45,9 @@ class Reports(models.Model):
     )
     description = models.CharField(max_length=255, null=True, default=None)
 
+    class Meta:
+        ordering = ["-time"]
+
 
 class ReportTypesToAccept(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
