@@ -21,7 +21,7 @@ export const createReport = (report: Report) => (dispach: Dispatch) => {
 export const getReports =
   (latitude: number, altitude: number) => (dispach: Dispatch) => {
     axios
-      .get(BASE_API_URL + "app/report/", { params: { latitude, altitude } })
+      .get(BASE_API_URL + "app/reports/", { params: { latitude, altitude } })
       .then((response) => {
         dispach(reportsFetched(response.data));
       })

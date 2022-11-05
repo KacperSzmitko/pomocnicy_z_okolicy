@@ -27,8 +27,8 @@ export interface ReportsType {
 }
 
 const initialState: ReportsType = {
-  current_latitude: 52,
-  current_altitude: 17,
+  current_latitude: 52.4,
+  current_altitude: 16.92,
   reports: [],
   avaliable_report_types: [],
 };
