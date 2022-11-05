@@ -12,7 +12,7 @@ export interface Report {
   latitude: number;
   altitude: number;
   report_type: string;
-  report_state?: string;
+  report_state: string;
   time?: string;
   max_people?: number;
   current_people?: number;

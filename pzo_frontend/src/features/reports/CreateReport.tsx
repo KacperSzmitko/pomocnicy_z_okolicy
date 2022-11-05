@@ -14,9 +14,10 @@ export default function SendReport() {
         e.preventDefault();
         dispach(createReport({
             report_type: reportType, 
+            report_state: "NEW",
             latitude: currentLat, 
             altitude: currentLon,
-            description: reportDescription,
+            description: reportDescription
         }));
     }
 
@@ -25,15 +26,15 @@ export default function SendReport() {
             <form onSubmit={onSubmit}>
                 <div>
                     <div>
-                        <input type="radio" id="danger" name="reportType" value="DANGER" 
+                        DANGER: <input type="radio" id="danger" name="reportType" value="DANGER" 
                         onChange={e => setReportType(e.target.value)}/>
                     </div>
                     <div>
-                        <input type="radio" id="help" name="reportType" value="HELP"
+                        HELP: <input type="radio" id="help" name="reportType" value="HELP"
                         onChange={e => setReportType(e.target.value)}/>
                     </div>
                     <div>
-                        <input type="radio" id="info" name="reportType" value="INFO"
+                        INFO: <input type="radio" id="info" name="reportType" value="INFO"
                         onChange={e => setReportType(e.target.value)}/>
                     </div>
                 </div>
