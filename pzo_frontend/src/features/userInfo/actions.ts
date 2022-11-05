@@ -5,7 +5,7 @@ import { userInfoFetched } from "./userInfoSlice";
 
 export const getUserInfo = () => (dispach: Dispatch) => {
   axios
-    .get(BASE_API_URL + "user/")
+    .get(BASE_API_URL + "app/user/")
     .then((response) => {
       dispach(userInfoFetched(response.data));
     })
