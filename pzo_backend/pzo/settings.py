@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,6 +132,30 @@ AUTH_USER_MODEL = "authorization.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "authorization.authentication.CustomAuthentication",
     )
 }
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 * 9
+
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ALLOW_CREDENTIALS = True
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
+    "REFRESH_TOKEN_LIFETIME": timedelta(weeks=4),
+    # Cookie name. Enables cookies if value is set.
+    "AUTH_COOKIE": "access",
+    "REFRESH_COOKIE": "refresh",
+    # A string like "example.com", or None for standard domain cookie.
+    "AUTH_COOKIE_DOMAIN": None,
+    # Whether the auth cookies should be secure (https:// only).
+    "AUTH_COOKIE_SECURE": False,
+    # Http only cookie flag.It's not fetch by javascript.
+    "AUTH_COOKIE_HTTP_ONLY": True,
+    "AUTH_COOKIE_PATH": "/",  # The path of the auth cookie.
+    "AUTH_COOKIE_SAMESITE": "Lax",
+}
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
