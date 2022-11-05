@@ -11,6 +11,10 @@ class UsersData(models.Model):
     city = models.CharField(max_length=255)
     points = models.IntegerField(default=0)
 
+    # def __str__(self) -> str:
+    #     return str({"user":self.user,"firstname":self.firstname,"surname":self.surname,
+    #         "age":self.user,"city":self.city,"points":self.points})
+
 class ReportTypes(models.Model):
     type_name = models.CharField(max_length=63)
     lifespan = models.IntegerField(default=3600)
