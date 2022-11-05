@@ -1,12 +1,15 @@
 import { Data } from '@react-google-maps/api';
 import React, { useEffect, useState } from 'react'
-import { useAppSelector } from '../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import Map from '../map/Map';
+import { acceptReport } from '../reports/actions';
 import {Report} from '../reports/reportsSlice'
 
 export interface PropType {
     report: Report;
   }
+
+
 
 function ResponseReport({report}: PropType) {
     const curr_lat =  useAppSelector((state) => state.reducer.reportsSlice.current_latitude)
@@ -15,9 +18,20 @@ function ResponseReport({report}: PropType) {
     const d = new Date();
     let reportTimeSec = d.getSeconds();
     const [curr_time, settime] = useState(d.getSeconds());
+    const dispach = useAppDispatch();
     useEffect(() => {
         setInterval(() => settime(Date.now()), 5000);
     }, []);
+    let reportAcceptanceState="NONE"
+
+    function reportDenied(){
+        reportAcceptanceState = "DENIED"
+    }
+
+    function reportAccepted(){
+        reportAcceptanceState = "ACCEPTED"
+        dispach(acceptReport(report!.id))
+    }
 
     return (<div className="response-report">
                 <div className="report-type">
@@ -36,7 +50,7 @@ function ResponseReport({report}: PropType) {
                                 {curr_distance}
                             </div>
                             <div className='report-info-time'>
-                                {curr_time - reportTimeSec}
+                                {(curr_time - reportTimeSec)/1000}
                             </div>
                         </div>
                         <div className='report-info-bottom-right report-info-user'>
@@ -46,11 +60,15 @@ function ResponseReport({report}: PropType) {
                     </div>
                 </div>
                 <div className="response-react">
-                    <div>
-                        {report.report_type.type_name === "HELP"} ? 
-                        {<div><button className="deny-button">DENY</button> <button className="accept-button">ACCEPT</button> </div>} : 
-                        {<button className="ok-button">OK</button>}
-                    </div>
+                    {reportAcceptanceState === "NONE"} ? 
+                        <div>
+                            {report.report_type.type_name === "HELP"} ? 
+                            {<div><button className="deny-button">DENY</button> <button onClick={reportAccepted} className="accept-button">ACCEPT</button> </div>} : 
+                            {<button className="ok-button">OK</button>}
+                        </div> :
+                            <div>
+                                RESPONSE SENT
+                            </div>
                 </div>
             </div>)
 }
