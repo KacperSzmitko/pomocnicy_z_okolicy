@@ -12,7 +12,7 @@ import { Dispatch } from "redux";
 
 export const createReport = (report: Report) => (dispach: Dispatch) => {
   axios
-    .post(BASE_API_URL + "app/report/", report)
+    .post(BASE_API_URL + "app/reports/", report)
     .then((response) => {
       dispach(reportCreated(response.data));
     })
@@ -31,7 +31,7 @@ export const getReports =
 
 export const acceptReport = (reportId: number) => (dispach: Dispatch) => {
   axios
-    .get(BASE_API_URL + `app/accept_report/${reportId}`)
+    .get(BASE_API_URL + `app/reports/accept_report/${reportId}`)
     .then((response) => {
       dispach(reportAccepted(reportId));
     })

@@ -17,6 +17,7 @@ export interface Report {
   max_people?: number;
   current_people?: number;
   description?: string;
+  user?: number;
 }
 
 export interface ReportsType {
@@ -56,7 +57,9 @@ const reportsSlice = createSlice({
     }
     else state.reports = action.payload.map((r) => ({ ...r, notified: false }));
     },
-    reportAccepted(state: ReportsType, action: PayloadAction<number>) {},
+    reportAccepted(state: ReportsType, action: PayloadAction<number>) {
+      state.reports.find((r) => r.id === action.payload)!.notified = true;
+    },
     reportTypesFetched(
       state: ReportsType,
       action: PayloadAction<ReportType[]>

@@ -49,6 +49,7 @@ export default function HomePage() {
         <button onClick={logOut}>Wyloguj</button>
         <br />
         <Link to="">Strona główna</Link> <br />
+        <Link to="/notifications">Powiadomienia</Link> <br />
         <Outlet />
       </div>
     )

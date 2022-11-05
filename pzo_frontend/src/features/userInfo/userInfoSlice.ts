@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface UserInfoType {
+  id: number;
   email: string;
   firstname: string;
   surname: string;
@@ -12,6 +13,7 @@ export interface UserInfoType {
 }
 
 const initialState: UserInfoType = {
+  id: 0,
   email: "",
   firstname: "",
   surname: "",
