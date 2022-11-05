@@ -9,8 +9,8 @@ export interface PropType {
   }
 
 function ResponseReport({report}: PropType) {
-    const curr_lat =  useAppSelector((state:any) => state.reducer.reportSlice.current_latitude)
-    const curr_lon =  useAppSelector((state:any) => state.reducer.reportSlice.current_altitude)
+    const curr_lat =  useAppSelector((state) => state.reducer.reportsSlice.current_latitude)
+    const curr_lon =  useAppSelector((state) => state.reducer.reportsSlice.current_altitude)
     const curr_distance = React.useMemo(()=>(Math.pow(Math.pow(curr_lat-report.latitude, 2) + Math.pow(curr_lon-report.altitude, 2), 0.5)/360)*6356752, [curr_lat, curr_lon]) 
     const d = new Date();
     let reportTimeSec = d.getSeconds();

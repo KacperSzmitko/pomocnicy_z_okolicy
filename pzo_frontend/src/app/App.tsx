@@ -12,17 +12,6 @@ function App() {
         <Route path="/" element={<HomePage />}>
           <Route path="/" element={<Map lat={52.001} lng={17} />}></Route>
           <Route path="*" element={<div></div>}></Route>
-          <Route path="report" element={<ResponseReport report = {{
-              "report_state":"STATE1",
-              "id":123,
-              "notified":false,
-              "latitude":52,
-              "altitude":17,
-              "report_type":{"type_name":"DANGER", "lifespan":5},
-              "time":'01 Jan 2022 00:00:00 GMT',
-              "max_people":5,
-              "current_people": 0,
-              "description": "Niebezpieczny rój os atakuje"}}/>}></Route>
         </Route>
         <Route path="login" element={<LoginPage />}></Route>
         <Route path="send_report" element={<div></div>}></Route>
@@ -32,3 +21,14 @@ function App() {
 }
 
 export default App;
+/*{
+              "report_state":"STATE1",
+              "id":123,
+              "notified":false,
+              "latitude":52,
+              "altitude":17,
+              "report_type":{"type_name":"DANGER", "lifespan":5},
+              "time":'01 Jan 2022 00:00:00 GMT',
+              "max_people":5,
+              "current_people": 0,
+              "description": "Niebezpieczny rój os atakuje"} */
