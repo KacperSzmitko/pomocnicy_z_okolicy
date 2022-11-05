@@ -37,7 +37,7 @@ class Reports(models.Model):
     current_people = models.IntegerField(
         validators=[validators.MinValueValidator(0), validators.MaxValueValidator(999)],
         null=True,
-        default=None,
+        default=0,
     )
     description = models.CharField(max_length=255, null=True, default=None)
 
