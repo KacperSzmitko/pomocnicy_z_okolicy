@@ -10,7 +10,7 @@ function App() {
     <div className="app" id="main_window">
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route path="/" element={<Map lat={52} lng={17} />}></Route>
+          <Route path="/" element={<Map lat={52.001} lng={17} />}></Route>
           <Route path="*" element={<div></div>}></Route>
         </Route>
         <Route path="login" element={<LoginPage />}></Route>

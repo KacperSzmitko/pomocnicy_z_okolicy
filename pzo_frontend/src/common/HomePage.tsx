@@ -4,6 +4,7 @@ import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom'
 
 import { useAppDispatch } from './hooks'
 import { getUserInfo } from '../features/userInfo/actions'
+import { getReportTypes } from "../features/reports/actions";
 
 interface CustomizedState {
   tokenStatus: number
@@ -27,7 +28,8 @@ export default function HomePage() {
 
   useEffect(() => {
     if (tokenStatus === 200) {
-      dispach(getUserInfo())
+      dispach(getUserInfo());
+      dispach(getReportTypes());
     } else if (tokenStatus === 401) {
       navigate('/login', { state: { tokenStatus } })
     }
