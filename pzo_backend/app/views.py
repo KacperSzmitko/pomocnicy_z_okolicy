@@ -13,6 +13,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView, ListAPIView
 from rest_framework.serializers import ModelSerializer
+from django.db.models import Q
+
+import math
 
 
 class UserData(APIView):
@@ -26,7 +29,7 @@ class UserData(APIView):
         def get_email(self, obj):
             return obj.user.email
 
-    def get(self, request: Request):
+    def get(self, request: Request) -> Response:
         # TODO
         # user_data = UsersData.objects.filter(user=request.user)
         user_data = UsersData.objects.filter(user=User.objects.first())
@@ -35,7 +38,7 @@ class UserData(APIView):
 
 
 class ResetTestData(APIView):
-    def get(self, request: Request):
+    def get(self, request: Request) -> Response:
 
         Reports.objects.all().delete()
         ReportStates.objects.all().delete()
@@ -141,7 +144,7 @@ class UserRate(UpdateAPIView):
     queryset = UsersData.objects.all()
     serializer_class = InputSerializer
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request) -> Response:
         instance: UsersData = UsersData.objects.get(user=request.user)
         instance.points += request.data.get("points")
         instance.save()
@@ -157,8 +160,8 @@ class GetReportTypes(ListAPIView):
 
     queryset = ReportTypes.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        instance: ReportTypes = ReportTypes.objects.all()
+    def get(self, request) -> Response:
+        instance = ReportTypes.objects.all()
         return Response(data=self.OutputSerializer(instance, many=True).data)
 
 
@@ -170,8 +173,8 @@ class GetReportStates(ListAPIView):
 
     queryset = ReportStates.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        instances: ReportStates = ReportStates.objects.all()
+    def get(self, request) -> Response:
+        instances = ReportStates.objects.all()
         return Response(data=self.OutputSerializer(instances, many=True).data)
 
 
@@ -182,23 +185,35 @@ class ReportView(APIView):
             fields = "__all__"
 
     def get(self, request: Request) -> Response:
-        latitude, area, altitude = (
+        latitude, longitude, area = (
             request.query_params.get("latitude", None),
             request.query_params.get("altitude", None),
             request.query_params.get("area", None),
         )
-        if not latitude or not area or not altitude:
+        if not latitude or not longitude or not area:
             return Response(status=400)
-        latitude, area, altitude = float(latitude), float(area), float(altitude)
+
+        latitude, longitude, area = float(latitude), float(longitude), float(area)
+
+        earth_r = 6378.137
+        pi = math.pi
+        m = (1 / ((2 * pi / 360.0) * earth_r)) / 1000.0
+        latitude_distance = m * area
+        longitude_distance = (m * area) / math.cos(latitude * (pi / 180.0))
+
         obj = Reports.objects.filter(
-            latitude__range=(latitude - area, latitude + area),
-            altitude__range=(altitude - area, altitude + area),
+            ~Q(report_state = ReportStates.objects.get(state_name="FINISHED")),
+            # TODO
+            # report_type__in = ReportTypesToAccept.objects.filter(user=request.user),
+            report_type__in = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type"),
+            latitude__range = (latitude-latitude_distance, latitude+latitude_distance),
+            altitude__range = (longitude-longitude_distance, longitude+longitude_distance)
         )
         reports = self.ReportSerializer(obj, many=True)
-        return Response(reports.data)
+        return Response(data=reports.data)
 
     def post(self, request: Request) -> Response:
         report = self.ReportSerializer(data=request.data)
         report.is_valid(raise_exception=True)
         report.save()
-        return Response(report.data)
+        return Response(data=report.data)
