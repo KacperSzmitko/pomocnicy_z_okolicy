@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../common/HomePage";
 import LoginPage from "../features/auth/LoginPage";
+import SendReport from '../features/sendReport/SendReport';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="*" element={<div></div>}></Route>
         </Route>
         <Route path="login" element={<LoginPage />}></Route>
+        <Route path="send_report" element={<SendReport />}></Route>
       </Routes>
     </div>
   );
