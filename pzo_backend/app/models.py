@@ -5,12 +5,16 @@ from django.core import validators
 
 
 class UsersData(models.Model):
+    firstname = models.CharField(max_length=255, default="")
+    surname = models.CharField(max_length=255, default="")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     age = models.IntegerField(validators=[validators.MinValueValidator(0)])
     city = models.CharField(max_length=255)
+    search_area = models.IntegerField(validators=[
+        validators.MinValueValidator(100),
+        validators.MaxValueValidator(1000)
+    ], default=300)
     points = models.IntegerField(default=0)
-    firstname = models.CharField(max_length=255, default="")
-    surname = models.CharField(max_length=255, default="")
 
 
 class ReportTypes(models.Model):

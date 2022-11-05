@@ -8,6 +8,7 @@ export interface UserInfoType {
   age: number;
   city: string;
   points: number;
+  search_area: number;
 }
 
 const initialState: UserInfoType = {
@@ -17,6 +18,7 @@ const initialState: UserInfoType = {
   age: 0,
   city: "",
   points: 0,
+  search_area: 0,
 };
 
 const userInfoSlice = createSlice({
