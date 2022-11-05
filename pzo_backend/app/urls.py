@@ -10,4 +10,3 @@ urlpatterns = [
     path("report/states", GetReportStates.as_view()),
     path("report/types", GetReportTypes.as_view()),
 ]
-
