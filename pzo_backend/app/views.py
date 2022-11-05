@@ -201,7 +201,7 @@ class ReportView(APIView):
     def get(self, request: Request) -> Response:
         latitude, longitude = (
             request.query_params.get("latitude", None),
-            request.query_params.get("altitude", None),
+            request.query_params.get("altitude", None)
         )
         if not latitude or not longitude:
             return Response(status=400)
@@ -217,10 +217,12 @@ class ReportView(APIView):
         latitude_distance = m * area
         longitude_distance = (m * area) / math.cos(latitude * (pi / 180.0))
 
+        t = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type")
+
         obj = Reports.objects.filter(
-            ~Q(report_state = ReportStates.objects.get(state_name="FINISHED")),
+            ~Q(report_state = "FINISHED"),
             # TODO
-            # report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
+            #report_type__in = ReportTypesToAccept.objects.filter(user=request.user).values("report_type"),
             report_type__in = ReportTypesToAccept.objects.filter(user=User.objects.first()).values("report_type"),
             latitude__range = (latitude-latitude_distance, latitude+latitude_distance),
             altitude__range = (longitude-longitude_distance, longitude+longitude_distance)

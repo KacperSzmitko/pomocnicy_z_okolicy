@@ -18,12 +18,12 @@ class UsersData(models.Model):
 
 
 class ReportTypes(models.Model):
-    type_name = models.CharField(max_length=63)
+    type_name = models.CharField(max_length=63, primary_key=True)
     lifespan = models.IntegerField(default=3600)
 
 
 class ReportStates(models.Model):
-    state_name = models.CharField(max_length=63)
+    state_name = models.CharField(max_length=63, primary_key=True)
 
 
 class Reports(models.Model):
